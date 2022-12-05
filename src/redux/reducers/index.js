@@ -4,8 +4,8 @@ import registerReducer from './registerReducer';
 import tokenReducer from './tokenReducer';
 
 const reducers = combineReducers({
-  login: loginReducer,
-  register: registerReducer,
+  // login: loginReducer,
+  // register: registerReducer,
   token: tokenReducer
 });
 

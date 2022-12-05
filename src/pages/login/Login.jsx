@@ -6,6 +6,7 @@ import useToken from '../../utils/token';
 import {
   useNavigate,
 } from 'react-router-dom';
+import { useCallback } from 'react';
 
 const Login = () => {
 
@@ -13,9 +14,9 @@ const Login = () => {
     email: "",
     password: "",
   });
-	const state = useSelector((state) => state);
+	// const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  
+
   const { getToken } = bindActionCreators(actionCreators, dispatch);
 
 	const { token } = useToken();
@@ -27,6 +28,10 @@ const Login = () => {
     }
   });
 
+	const handleSubmit = async () => {
+		dispatch( await getToken(credentials.email, credentials.password))
+	}
+
 	return (
   <>
     <div className="row">
@@ -34,7 +39,7 @@ const Login = () => {
 				<div className="row">
 					<div className="col-md-6 offset-md-3">
 						<div>
-							<form>
+							<form onSubmit={handleSubmit}>
 							<div className="clearfix">
 								<div className="form-group">
 									<input type="email" name="email" id="email" placeholder="Email" autoComplete="email" className="form-control" onChange={handleChange} required />
@@ -52,7 +57,7 @@ const Login = () => {
 							</div>
 							<div className="mt-30 text-center">
 								<div className="btn ">
-									<input type="submit" onClick={ () => dispatch(getToken(credentials.email, credentials.password))} className="btn btn-primary"/>
+									<input type="submit" className="btn btn-primary"/>
 								</div>
 								<div className="mt-10 text-center">
 								</div>
@@ -84,6 +89,8 @@ const Login = () => {
 				return ""
 		}
   }
+
+	
 
 	const login = async (dispatch) => {
 		dispatch(getToken(credentials.email, credentials.password))

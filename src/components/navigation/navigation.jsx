@@ -14,6 +14,15 @@ const Navigation = () => {
   const [_eventKey, set_eventKey] = useState(window.location.hash ? window.location.hash : window.location.pathname);
   const { token } = useToken();
 
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { logOut } = bindActionCreators(actionCreators, dispatch);
+
+  const handleLogOut = async() => {
+    localStorage.clear();
+    // dispatch( await logOut() )
+  }
+
   return (
     <>
       <Navbar sticky="top" bg="dark" variant="dark" >
@@ -36,7 +45,7 @@ const Navigation = () => {
             <NavDropdown title="My profile" id="basic-nav-dropdown ">
                 <NavDropdown.Item href={"/user/profile"}>Edit Profile</NavDropdown.Item>
                 <NavDropdown.Item href={"/user/profile#my-pets"}>My pets</NavDropdown.Item>
-                <NavDropdown.Item href={"/"} onClick={() => localStorage.clear()} eventKey="/">Log out</NavDropdown.Item>
+                <NavDropdown.Item href={"/"} onClick={handleLogOut} eventKey="/">Log out</NavDropdown.Item>
             </NavDropdown> : 
             <Nav className="me-auto account" activeKey={ window.location.pathname }>
               <Nav.Link href={"/login"} eventKey="/login">Login</Nav.Link>
