@@ -3,24 +3,30 @@ import './navigation.css';
 import logo from '../../assets/universitepsychocaninelogo.jpg'
 import { NavDropdown, Navbar, Nav, Container } from 'react-bootstrap';
 import { useState } from 'react';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { bindActionCreators } from '@reduxjs/toolkit';
-import { actionCreators } from '../../redux/index';
 import useToken from '../../utils/token';
 
 
 const Navigation = () => {
   const [_eventKey, set_eventKey] = useState(window.location.hash ? window.location.hash : window.location.pathname);
   const { token } = useToken();
+  const token_expires = localStorage.getItem("expirationDate");
 
-  const state = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const { logOut } = bindActionCreators(actionCreators, dispatch);
+  // const state = useSelector((state) => state);
 
   const handleLogOut = async() => {
     localStorage.clear();
     // dispatch( await logOut() )
+  }
+
+  let _token = new Date(token_expires).toUTCString(); // fixing needed
+  console.log(`Iso format: ${_token} \n readable format: ${localStorage.getItem('expirationDate')}`);
+  let tokenDate = Date(token_expires);
+  console.log(_token);
+  console.log(Date.now());
+  
+  console.log(Date(token_expires));
+  if (token && tokenDate >= Date.now()  ) {
+    console.log(`Current Date ${Date.now()} \n token expires at ${token_expires}`);
   }
 
   return (

@@ -6,46 +6,56 @@ import useToken from '../../utils/token';
 import {
   useNavigate,
 } from 'react-router-dom';
-import { useCallback } from 'react';
+import {ErrorMessage} from '../../components/index';
+import { Alert } from 'react-bootstrap';
 
 const Login = () => {
-
 	const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
-	// const state = useSelector((state) => state);
+
+	const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const { getToken } = bindActionCreators(actionCreators, dispatch);
+	const { clearState } = bindActionCreators(actionCreators, dispatch);
 
 	const { token } = useToken();
 
 	const navigate = useNavigate();
+
   useEffect(() => {
-    if (token) {
-      navigate('/');
+    if ( token || state?.token?.token ) {
+				navigate(-1, state.token.token);
     }
   });
 
-	const handleSubmit = async () => {
-		dispatch( await getToken(credentials.email, credentials.password))
-	}
-
+	console.log(state);
 	return (
   <>
+							
     <div className="row">
 			<div className="container">
 				<div className="row">
 					<div className="col-md-6 offset-md-3">
 						<div>
+							{ state?.token?.errorStatus ?
+								// <Alert key="danger" onClose={() => clearErr()} dismissible variant="danger">
+								// { state.token.errorStatus + ": " + state.token.errorMessage }
+								// </Alert> : null
+								
+								
+								/* needs refactoring + fix logic perhaps?*/
+								<ErrorMessage errorStatus={state.token.errorStatus} errorMessage={state.token.errorMessage} actionType="CLEARTOKENERROR" /> : null
+							}
 							<form onSubmit={handleSubmit}>
-							<div className="clearfix">
-								<div className="form-group">
-									<input type="email" name="email" id="email" placeholder="Email" autoComplete="email" className="form-control" onChange={handleChange} required />
+							<div className="form">
+								<div className="">
+									<input type="email" name="email" id="email" placeholder="Email" autoComplete="email" className="tm-input" onChange={handleChange} required />
 								</div>
 								<div className="form-group">
-									<input type="password" name="password" id="password" placeholder="Password" autoComplete="current-password" className="form-control" onChange={handleChange} required />
+									<input type="password" name="password" id="password" placeholder="Password" autoComplete="current-password input" className="tm-input" onChange={handleChange} required />
 								</div>
 							</div>
 							<div className="row">
@@ -70,6 +80,16 @@ const Login = () => {
 		</div>
   </>
   )
+	
+	async function handleSubmit(e){
+		e.preventDefault();
+		dispatch( await getToken(credentials.email, credentials.password))
+	}
+
+	function clearErr(actionType) {
+		dispatch( clearState("CLEARTOKENERROR") )
+	}
+	
 
 	function handleChange(event) {
 		switch(event.target.name){
@@ -89,13 +109,6 @@ const Login = () => {
 				return ""
 		}
   }
-
-	
-
-	const login = async (dispatch) => {
-		dispatch(getToken(credentials.email, credentials.password))
-	}
-
 }
 
 export default Login;

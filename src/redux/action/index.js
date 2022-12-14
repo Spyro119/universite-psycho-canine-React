@@ -1,19 +1,22 @@
-import { API_URL } from "../../utils/const";
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import Login from "../../pages/login/Login";
+import {
+  LOADINGTOKEN,
+  FETCHTOKENSUCCESS,
+  FETCHTOKENFAIL,
+  LOADINGREGISTER,
+  // REGISTERSUCCESS,
+  REGISTERFAIL,
+  API_URL
+} from "../../utils/const";
 
-const loading = "loading";
-const fetchToken = "fetchToken";
-const httpError = "httpError";
 const POSTING = "POSTING";
 const SUCCESS = "SUCCESS";
-const FAILURE = "FAILURE"
+const FAILURE = "FAILURE";
 
 // TOKENS
 export const getToken = (email, password) => {
   return function(dispatch) {
     dispatch({
-      type: loading,
+      type: LOADINGTOKEN,
     });
 
     return fetch(API_URL + "v1/Authenticate/login", {
@@ -24,17 +27,19 @@ export const getToken = (email, password) => {
     body: JSON.stringify({username: email, password: password})
   }).then((data) => data.json())
     .then( (jsonData) => {
-      localStorage.setItem('refresh_token', JSON.stringify(jsonData.refreshToken));
-      localStorage.setItem('token', JSON.stringify(jsonData.token));
-      localStorage.setItem('expirationDate', JSON.stringify(jsonData.expiration));
-      localStorage.SetItem('email', JSON.stringify(email));
+      if (jsonData.status >= 400) {
+        return dispatch({
+          type: FETCHTOKENFAIL,
+          payload: jsonData
+        })
+      }
       return dispatch({
-          type: fetchToken,
+          type: FETCHTOKENSUCCESS,
           payload: jsonData
         })
       })
     .catch(error => dispatch({
-      type: httpError,
+      type: FETCHTOKENFAIL,
       payload: error
     }))
   }
@@ -45,7 +50,7 @@ export const getToken = (email, password) => {
 export const register = (email, password) => {
   return function(dispatch) {
     dispatch({
-      type: POSTING,
+      type: LOADINGREGISTER,
     });
 
     return fetch(API_URL + "v1/Authenticate/register", {
@@ -56,13 +61,23 @@ export const register = (email, password) => {
     body: JSON.stringify({username: email, email: email, password: password})
   }).then((data) => data.json())
     .then( (jsonData) => {
-      return getToken(email, password);
+      console.log(jsonData);
+      if (jsonData.status === "Error") {
+        return dispatch({
+          type: REGISTERFAIL,
+          payload: jsonData
+        })
+      }
+        return getToken(email, password);
       }
     )
-    .catch(error => dispatch({
-      type: FAILURE,
-      payload: error
-    }))
+    .catch(error => {
+      console.log(error);
+      return dispatch({
+        type: REGISTERFAIL,
+        payload: error
+      })
+    })
   }
 }
 
@@ -100,6 +115,13 @@ export const logOut = () => {
     };
 }
 
+export const clearState = (_actionType) => {
+  return function(dispatch) {
+    return dispatch({
+      type: _actionType,
+    });
+  }
+}
 
 const refreshToken = () => {
   var refresh_token = localStorage.getItem("refresh_token");

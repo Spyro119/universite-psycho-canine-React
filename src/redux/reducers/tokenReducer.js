@@ -1,22 +1,40 @@
-const initialState = { data: [], status:"" };
+import { 
+  LOADINGTOKEN,
+  FETCHTOKENFAIL,
+  FETCHTOKENSUCCESS,
+  CLEARTOKENERROR
+ } from "../../utils/const"; 
 
-const tokenReducer = (state = "", action) => {
+const initialState = {
+  status: '',
+  errorStatus: null,
+  errorMessage: null
+}
+
+
+const tokenReducer = (state = initialState, action) => {
   console.log(`action = ${action.type}`);
+  console.log(action);
   switch (action.type) {
-    case "POSTING":
-      state = Object.assign({}, state, {token: "", status: "waiting"});
-      return null;
-    case "SUCESS":
-      // console.log("login in");
+    case LOADINGTOKEN:
+      return {
+        ...state,
+        status: 'loading'
+      }
+    case FETCHTOKENSUCCESS:
       localStorage.setItem('refresh_token', JSON.stringify(action.payload.refreshToken));
       localStorage.setItem('token', JSON.stringify(action.payload.token));
       localStorage.setItem('expirationDate', JSON.stringify(action.payload.expiration));
-      console.log(action.payload);
-      state = Object.assign({}, state, {data: [...action.payload], status: "received"});
       return action.payload
-    case "FAILURE":
-      state = Object.assign({}, state, {status: "failed", error: action.payload});
-      return action.payload;
+    case FETCHTOKENFAIL:
+    return {
+      ...state,
+      status: 'failed',
+      errorStatus: action.payload.status,
+      errorMessage: action.payload.title
+    }
+    case CLEARTOKENERROR:
+      return initialState;
     default: 
       return state
   }

@@ -3,7 +3,7 @@ import { useState } from 'react';
 export default function useToken() {
   const getToken = () => {
     const tokenString = localStorage.getItem('token');
-    if (tokenString != "undefined") { // TO REMOVE
+    if (tokenString !== "undefined") { // TO REMOVE
       const userToken = JSON.parse(tokenString);
       return userToken
     } // TO REMOVE
