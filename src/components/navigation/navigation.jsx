@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import './navigation.css';
 import logo from '../../assets/universitepsychocaninelogo.jpg'
-import { NavDropdown, Navbar, Nav, Container } from 'react-bootstrap';
+import { NavDropdown, Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import useToken from '../../utils/token';
 

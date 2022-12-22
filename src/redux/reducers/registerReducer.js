@@ -2,6 +2,7 @@ import {
   LOADINGREGISTER,
   REGISTERFAIL,
   REGISTERSUCCESS,
+  CLEARREGISTER
  } from "../../utils/const"; 
 
 const initialState = {
@@ -18,7 +19,11 @@ const registerReducer = ( state = initialState, action ) => {
     case REGISTERSUCCESS:
       return action.payload
     case REGISTERFAIL:
-      state = Object.assign({}, state, { status: "Failed",errorStatus: action.payload.status, errorMessage: action.payload.message });
+      console.log(action.payload);
+      state = Object.assign({}, state, { status: "Failed",errorStatus: action.payload.status, errorMessage: action.payload.title });
+      return state;
+    case CLEARREGISTER:
+      state = initialState;
       return state;
     default: 
       return state

@@ -23,22 +23,24 @@ const Contact = () => {
             
             <div className="col-sm-12 col-md-6">
 
-                <div className="contact-item">
+                {/* <div className="contact-item">
                   <a rel="nofollow" href="https://www.tooplate.com/contact" className="item-link">
                       <i className="far fa-2x fa-comment mr-4"></i>
                       <span className="mb-0">Chat Online</span>
                   </a>              
-                </div>
+                </div> */}
                 
                 <div className="contact-item">
-                  <a rel="nofollow" href="mailto:mail@company.com" className="item-link">
+                  <a rel="nofollow" href="mailto:contactus@universitepsychocanine.com" className="item-link">
                       <i className="far fa-2x fa-envelope mr-4"></i>
-                      <span className="mb-0">mail@company.com</span>
+                      <span className="mb-0">contactus@universitepsychocanine.com</span>
                   </a>              
                 </div>
                 
                 <div className="contact-item">
-                  <a rel="nofollow" href="https://www.google.com/maps" className="item-link">
+                  <a rel="nofollow" 
+                  // href="https://www.google.com/maps"
+                  className="item-link">
                       <i className="fas fa-2x fa-map-marker-alt mr-4"></i>
                       <span className="mb-0">Our Location</span>
                   </a>              
@@ -51,7 +53,7 @@ const Contact = () => {
                   </a>              
                 </div>
                 
-                <div className="contact-item">&nbsp;</div>
+                {/* <div className="contact-item">&nbsp;</div> */}
             
             </div>
             

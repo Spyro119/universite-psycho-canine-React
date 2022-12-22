@@ -6,14 +6,15 @@ import useToken from '../../utils/token';
 import {
   useNavigate,
 } from 'react-router-dom';
-import {ErrorMessage} from '../../components/index';
-import { Alert } from 'react-bootstrap';
+import { ErrorMessage } from '../../components/index';
 
 const Login = () => {
 	const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
+
+	let height = window.innerHeight;
 
 	const state = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -34,9 +35,8 @@ const Login = () => {
 	console.log(state);
 	return (
   <>
-							
-    <div className="row">
-			<div className="container">
+		<div className="column" >					
+			<div className="container" style={{  paddingTop: height / 4 + "px", paddingBottom: height/4 + "px" }} >
 				<div className="row">
 					<div className="col-md-6 offset-md-3">
 						<div>

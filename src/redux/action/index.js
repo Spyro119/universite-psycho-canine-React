@@ -1,3 +1,4 @@
+import { ExitStatus } from "typescript";
 import {
   LOADINGTOKEN,
   FETCHTOKENSUCCESS,
@@ -62,13 +63,14 @@ export const register = (email, password) => {
   }).then((data) => data.json())
     .then( (jsonData) => {
       console.log(jsonData);
-      if (jsonData.status === "Error") {
+      if (jsonData.status === 400) {
         return dispatch({
           type: REGISTERFAIL,
           payload: jsonData
         })
-      }
-        return getToken(email, password);
+      } if (jsonData.status !== 400) { 
+          return getToken(email, password);
+        }
       }
     )
     .catch(error => {

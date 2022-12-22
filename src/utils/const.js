@@ -6,6 +6,7 @@ export const CLEARTOKENERROR = "CLEARTOKENERROR";
 export const LOADINGREGISTER = "LOADINGREGISTER";
 export const REGISTERFAIL = "REGISTERFAIL";
 export const REGISTERSUCCESS = "REGISTERSUCCESS";
+export const CLEARREGISTER = "CLEARREGISTER";
 
 // util constants
 export const API_URL = "http://localhost:5016/api/"; // Dev url

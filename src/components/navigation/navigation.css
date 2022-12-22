@@ -19,6 +19,7 @@
 }
 .container {
   max-width: 100%;
+  /* overflow-x: hidden; */
 }
 /* Define the block styling for the links */
 .nav li a {
@@ -37,7 +38,7 @@ a.active {
   margin-right: 4rem;
 }
 
-.main-header { 
+.main-header {
   /* position: fixed; */
   top: 0;
   left: 0;
@@ -65,8 +66,25 @@ a.active {
   }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 650px) {
   .navbar{
     font-size:small;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  /* integrate a mobile nav-menu */
+  .navbar{
+    font-size:small;
+    width: max-content;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .navbar{
+    font-size:small;
+    display: grid;
+    width: max-content;
   }
 }

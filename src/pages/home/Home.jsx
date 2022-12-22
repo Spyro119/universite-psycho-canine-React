@@ -5,7 +5,7 @@ import Image from '../../assets/desktop-1680x1050.jpg';
 const Home = () => {
   return (
     <>
-    <img src={Image} className="main-image" alt="Home" />
+    {/* <img src={Image} className="main-image" alt="Home" /> */}
     <div>
       <p> small Home description </p>
     </div>

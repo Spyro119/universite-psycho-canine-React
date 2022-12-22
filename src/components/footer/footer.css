@@ -1,0 +1,16 @@
+.footer { 
+  background-color: rgba(0,0,0,0.2);
+  padding: 25px 0;
+  font-size: 13px;
+  display: block;
+  color: rgba(255,255,255,0.6);
+  width: 100%;
+}
+
+@media only screen and (max-width: 500px) {
+  .footer {
+      font-size: small;
+      /* width: max-content; */
+    }
+}
+
